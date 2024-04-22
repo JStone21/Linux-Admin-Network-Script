@@ -1,0 +1,31 @@
+#!/bin/bash
+function separate_output(){
+echo "---------------" >> $1
+}
+
+read -p "Enter filename: " filename
+echo "The filename you entered was: " $filename
+
+echo "starting ip a command"
+ip a >> $filename
+separate_output $filename
+
+echo "Starting Ping -c 4 google.com"
+ping -c 4 google.com >> $filename
+separate_output $filename
+
+echo "Starting ping -c 4 8.8.8.8 (google dns server)"
+ping -c 4 8.8.8.8 >> $filename
+separate_output $filename
+
+echo "Printing routing table"
+router >> $filename
+separate_output $filename
+
+echo "Printing active TCP ports"
+ss -ta >> $filename
+separate_output $filename
+
+echo "Printing DNS status"
+resolvectl status >> $filename
+separate_output $filename
